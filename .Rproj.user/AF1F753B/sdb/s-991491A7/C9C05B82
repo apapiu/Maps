@@ -1,0 +1,18 @@
+{
+    "contents" : "#tigris:\nlibrary(tigris)\nlibrary(leaflet)\nlibrary(sp)\n\nstates <- states()\nuas <- urban_areas(cb = TRUE)\ncount <- counties(state = c(\"New York\", \"Massachusetts\", \"Connecticut\",\n                            \"New Hampshire\", \"Vermont\"))\ntracts <- tracts(state = \"NY\")\npumaz <- pumas(state = \"MO\")\nblock <- blocks(state = \"NY\")\nzipss <- zctas(starts_with = c(\"37\", \"38\", \"72\"))\ndf <- zctas(cb = TRUE, starts_with = c(\"37\", \"38\", \"72\"))\n\n\nleaflet() %>%\n    addTiles() %>%\n    addProviderTiles(\"CartoDB.Positron\") %>%\n    addPolygons(weight = 2, data = count)\n\n",
+    "created" : 1455343848097.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4241537344",
+    "id" : "C9C05B82",
+    "lastKnownWriteTime" : 1455579123,
+    "path" : "~/Documents/R/Maps_dataincu/tigris.R",
+    "project_path" : "tigris.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
