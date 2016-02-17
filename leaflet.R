@@ -2,18 +2,18 @@ library(leaflet)
 library(ggplot2)
 library(magrittr)
 library(htmlwidgets)
-
-#installing rgdal was hardd
-install.packages("tigris")   
-install.packages('rgeos', type="source")
-install.packages('rgdal', type="source")
-install.packages('rgdal', type = "source", configure.args=c('--with-proj-include=/usr/local/include','--with-proj-lib=/usr/local/lib'))
-
 library(tigris)
 library(acs)
 library(stringr) # to pad fips codes
 library(rgdal)
 library(dplyr)
+
+#installing rgdal was hard looked it up on stackexchange
+install.packages("tigris")   
+install.packages('rgeos', type="source")
+install.packages('rgdal', type="source")
+install.packages('rgdal', type = "source", configure.args=c('--with-proj-include=/usr/local/include','--with-proj-lib=/usr/local/lib'))
+
 
 
 saveWidget(widget = your.map, file="your_map.html", selfcontained = FALSE)

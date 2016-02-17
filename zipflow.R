@@ -1,7 +1,5 @@
 library(tigris)
 library(acs)
-library(rgeos)
-library(sp)
 library(leaflet)
 
 #It's a good idea to have "merge" as the final dataframe and "stat" as the variable

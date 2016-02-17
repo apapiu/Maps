@@ -3,6 +3,7 @@ library(acs)
 library(rgeos)
 library(sp)
 #It's a good idea to have "merge" as the final dataframe and "stat" as the variable
+#also use "final.df" as the final numeric dataframe
 
 #### COUNTY LEVEL:
 states = c("MO", "IL")

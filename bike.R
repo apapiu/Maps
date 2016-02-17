@@ -1,4 +1,5 @@
-#percentage of people who walk to work by tract:
+
+#percentage of people who walk to work by tract
 
 geo<-geo.make(state=c("NY"),
               county=c(5, 47, 61, 81), tract="*", check = TRUE)
@@ -38,6 +39,7 @@ merge$stat))%>%
               position = "bottomright",
               opacity = .7,
               title = "Percentage of People biking to work")
+#there seems to be a lot of variance, using zip codes seems better 
 
 #--------------------------
 #do this at the zipcta level, unfortunately the acs.fetch is acting up so I download the data.
