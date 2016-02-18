@@ -58,3 +58,4 @@ leaflet() %>%
               position = "bottomright",
               opacity = .7,
               title = "Median Age by Zip Code") 
+

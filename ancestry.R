@@ -7,7 +7,7 @@ library(dplyr)
 counties <- "*" #give codes of counties here
 state <- c("CA")
 
-map.ancestry("CA", "*")
+map.ancestry("NY", c(5, 47, 61, 81, 85))
 
 
 
@@ -52,6 +52,7 @@ map.ancestry <- function(state, counties) {
     
     leaflet() %>%
                 addProviderTiles("CartoDB.Positron") %>%
+                setView(lng = -74.0059, lat = 40.7127, zoom = 13) %>%
                 addPolygons(data = merge, 
                             fillColor = ~pal(stat), fillOpacity = .6, 
                             color = "white", weight = 0.3,
