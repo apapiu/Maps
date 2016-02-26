@@ -3,6 +3,7 @@ library(leaflet)
 library(tigris)
 library(stringr)
 library(dplyr)
+library(acs)
 
 counties <- "*" #give codes of counties here
 state <- c("CA")
@@ -63,6 +64,8 @@ map.ancestry <- function(state, counties) {
                           opacity = .7,
                           title = "Ancestry")
 }
+
+
 tracts <- tracts(state = "NY", cb=TRUE)
 
 

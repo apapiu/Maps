@@ -1,0 +1,93 @@
+---
+title: "To be Young and Single"
+output: html_document
+---
+
+
+
+```{r, warning= FALSE, message=FALSE}
+library(ggplot2)
+library(plotly)
+library(leaflet)
+library(dplyr)
+```
+
+Now let's look at the American Community Survey Data and extract the data we are ineterseted in - namely young non-married people arranged by sex and state.
+
+```{r}
+load("/Users/alexpapiu/Documents/R/ACS Census EDA/census.Rd")
+
+ysingles <- filter(cens, AGEP >= 18, AGEP <= 35, MAR %in% c(2,3,4,5))
+ysingles.college <- filter(ysingles, SCHL %in% 20:24)
+
+singbysex <- table(ysingles$SEX, ysingles$ST)
+ratios <- singbysex[1,]/singbysex[2,] #ratios
+
+singbysex.col <- table(ysingles.college$SEX, ysingles.college$ST)
+ratios.col <- singbysex.col[1,]/singbysex.col[2,] #ratios for college
+```
+So now we have de data neatly organized in ratios of men to women by state.
+
+```{r, echo = FALSE}
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv") #this gives you the states names
+
+singles.state <- data.frame(code = df$code, ratios = ratios[-11],
+                            ratios.col = ratios.col[-11]) #no washingoton DC
+singles.state$men <- floor(singles.state$ratios*100)
+singles.state$mencol <- floor(singles.state$ratios.col*100)
+singles.state$state <- df$state
+
+
+singles.state$hover1 <- with(singles.state, 
+                             paste(state, "<br>", men, " single men for every 100 single women" ) )
+    
+singles.state$hover2 <- with(singles.state, 
+                             paste(state, "<br>", mencol, " single men for every 100 single women" ) )
+
+g <- list(
+    scope = 'usa',
+    projection = list(type = 'albers usa'),
+    showlakes = TRUE,
+    lakecolor = toRGB('white')
+) #basic map stuff
+```
+
+Ok now that we have everyhing in place it's time to look at our first maps!
+`plotly` give you ineractive maps!
+```{r}
+#singles ratios
+plot_ly(singles.state, z = ratios, locations = code, type = 'choropleth',
+        locationmode = 'USA-states', color = ratios, colors = 'Purples',
+        text = hover1, colorbar = list(title = "Ratio")) %>%
+    layout(title = 'Ratio of Single Men to Women Aged 18 to 35 
+           <br> (Hover for breakdown)', geo = g)
+```
+What can we see in the map above? Well there are more single men than women in all states except Florida. North Dakota is by the the worst state for single men: there are roughly 140 single men for every 100 single women! If you're a single straight man it seems like Florida or the South might be your best bet! If you're a single woman move to North Dakota or Alaska! Unless of course you're an actual human being that has other priorities and responsibilties.
+
+Now let's look at college educated people.
+```{r}
+#college singles ratios
+plot_ly(singles.state, z = ratios.col, locations = code, type = 'choropleth',
+        locationmode = 'USA-states', color = ratios.col, colors = 'Purples', 
+        text = hover2, colorbar = list(title = "Ratio")) %>%
+    layout(title = 'Ratio of Colege Educated Single Men to Women <br> (Hover for breakdown)',geo = g)
+
+```
+As we can see above the situation changes _dramatically_ - alsmot all states now have a surplus of single women - for exampe New Mexico has 67 men for every 100 single women!
+
+```{r}
+#marital status by age
+g2 <- ggplot(cens, aes(x = AGEP, ..count.., fill = as.factor(MAR))) +
+    geom_density(alpha = 0.4, position = 'identity')
+
+ggplotly(g2)
+
+#density by age by sex
+ggplotly(ggplot(cens, aes(x = AGEP,..count.. ,fill = as.factor(SEX))) + 
+            geom_density(alpha = 0.4) +
+            xlab("Age") + ylab("Count") +
+            scale_fill_discrete(name = "Sex", labels = c("Female", "Male")))
+
+
+```
+
