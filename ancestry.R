@@ -8,9 +8,6 @@ library(acs)
 counties <- "*" #give codes of counties here
 state <- c("CA")
 
-map.ancestry("NY", c(5, 47, 61, 81, 85))
-
-
 
 #function outputting the map of ancestry by tract in given counties:
 
@@ -65,6 +62,7 @@ map.ancestry <- function(state, counties) {
                           title = "Ancestry")
 }
 
+map.ancestry("NY", c(5, 47, 61, 81, 85))
 
 tracts <- tracts(state = "NY", cb=TRUE)
 

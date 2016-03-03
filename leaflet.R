@@ -1,6 +1,5 @@
 library(leaflet)
 library(ggplot2)
-library(magrittr)
 library(htmlwidgets)
 library(tigris)
 library(acs)
@@ -9,16 +8,12 @@ library(rgdal)
 library(dplyr)
 
 #installing rgdal was hard looked it up on stackexchange
-install.packages("tigris")   
-install.packages('rgeos', type="source")
-install.packages('rgdal', type="source")
-install.packages('rgdal', type = "source", configure.args=c('--with-proj-include=/usr/local/include','--with-proj-lib=/usr/local/lib'))
-
-
+#install.packages("tigris")   
+#install.packages('rgeos', type="source")
+#install.packages('rgdal', type="source")
+#install.packages('rgdal', type = "source", configure.args=c('--with-proj-include=/usr/local/include','--with-proj-lib=/usr/local/lib'))
 
 saveWidget(widget = your.map, file="your_map.html", selfcontained = FALSE)
-
-
 
 counties <- c(5, 47, 61, 81, 85)
 
@@ -48,8 +43,8 @@ income_df$percent <- 100*(income_df$over_200/income_df$total)
 #merging the data in the map and the data in the mapdata:
 
 income_merged<- geo_join(tracts, income_df, "GEOID", "GEOID")
-# there are some tracts with no land that we should exclude
-income_merged <- income_merged[income_merged$ALAND>0,]
+
+
 
 popup <- paste0("GEOID: ", income_merged$GEOID, "<br>", "Percent of Households above $200k: ", round(income_merged$percent,2))
 

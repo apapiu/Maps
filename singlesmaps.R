@@ -15,9 +15,7 @@ singbysex.col <- table(ysingles.college$SEX, ysingles.college$ST)
 ratios.col <- singbysex.col[1,]/singbysex.col[2,] #ratios for college
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv")
-#[1] AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI
-#[23] MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT
-#[45] VT VA WA WV WI WY
+
 
 singles.state <- data.frame(code = df$code, ratios = ratios[-11],
                             ratios.col = ratios.col[-11]) #no washingoton DC
@@ -53,13 +51,6 @@ plot_ly(singles.state, z = ratios.col, locations = code, type = 'choropleth',
         text = hover2, colorbar = list(title = "Ratio")) %>%
     layout(title = 'Ratio of Colege Educated Single Men to Women <br> (Hover for breakdown)',geo = g)
 
-
-library(leaflet)
-topoData <- readLines("json/us-10m.json") %>% paste(collapse = "\n")
-
-leaflet() %>% setView(lng = -98.583, lat = 39.833, zoom = 3) %>%
-    addTiles() %>%
-    addTopoJSON(topoData, weight = 1, color = "#444444", fill = FALSE)
 
 
 
